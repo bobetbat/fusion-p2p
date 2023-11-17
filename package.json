@@ -10,5 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "js-waku": "^0.16.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.9.1",
+    "typescript": "^5.2.2"
   }
 }

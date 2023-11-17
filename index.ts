@@ -1,24 +1,59 @@
-const { Waku } = require('js-waku');
+import express from 'express';
+import { Waku, WakuMessage } from 'js-waku';
+import bodyParser from 'body-parser';
 
-async function startWaku() {
-    // Create a Waku node
-    const waku = await Waku.create({
-        bootstrap: {
-            default: true,
-        },
-    });
+const app = express();
+const port = 3000;
 
-    console.log('Waku node created and started.');
+// Initialize an array to store the orders
+let orderBook: any[] = [];
 
-    // Define a message payload
-    const payload = new TextEncoder().encode('Hello, World!');
+app.use(bodyParser.json());
 
-    // Send the message
-    await waku.lightPush.push('your_topic_here', payload);
+async function startWaku(): Promise<void> {
+	const waku = await Waku.create({
+		bootstrap: {
+			default: true,
+		},
+	});
 
-    console.log('Message sent!');
+	console.log('Waku node created and started.');
+
+	// Listen for messages on the /orderbook topic
+	waku.relay.addObserver((msg) => {
+		if (msg.contentTopic === '/orderbook') {
+			const messageText = new TextDecoder().decode(msg.payload);
+			try {
+				const order = JSON.parse(messageText);
+				orderBook.push(order);
+				console.log('Order added to orderBook:', order);
+			} catch (error) {
+				console.error('Error parsing message:', error);
+			}
+		}
+	}, ['/orderbook']);
+
+	// Handle POST request to /create-order
+	app.post('/create-order', async (req, res) => {
+		const order = req.body;
+		console.log('Received order:', order);
+
+		const payload = new TextEncoder().encode(JSON.stringify(order));
+		await waku.relay.send(await WakuMessage.fromBytes(payload, '/orderbook'));
+
+		res.send('Order added to the orderbook');
+	});
+
+	// Handle GET request to /orderbook
+	app.get('/orderbook', (req, res) => {
+		res.json(orderBook);
+	});
+
+	app.listen(port, () => {
+		console.log(`Server listening at http://localhost:${port}`);
+	});
 }
 
-startWaku().catch((e) => {
-    console.error('Error starting Waku node:', e);
+startWaku().catch((e: Error) => {
+	console.error('Error starting Waku node:', e);
 });
