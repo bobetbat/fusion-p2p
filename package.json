@@ -1,0 +1,14 @@
+{
+  "name": "waku-node-server",
+  "version": "1.0.0",
+  "description": "A simple Waku P2P server node in JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "js-waku": "^0.16.0"
+  }
+}
