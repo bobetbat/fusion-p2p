@@ -1,7 +1,7 @@
 import express from 'express';
 import { Waku, WakuMessage } from 'js-waku';
 import bodyParser from 'body-parser';
-import { createFusionOrder} from './create-order';
+import { createFusionOrder } from './create-order.js';
 
 const app = express();
 const port = 3000;
