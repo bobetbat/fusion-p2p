@@ -1,0 +1,12 @@
+# Git
+.git
+
+# Environment
+.env*
+
+# NodeJS
+node_modules/
+yarn-error.log*
+
+# Build
+dist/

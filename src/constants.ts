@@ -1,0 +1,10 @@
+export enum NetworkEnum {
+  ETHEREUM = 1,
+  POLYGON = 137,
+  BINANCE = 56,
+  ARBITRUM = 42161,
+  AVALANCHE = 43114,
+  OPTIMISM = 10,
+  FANTOM = 250,
+  GNOSIS = 100
+}
