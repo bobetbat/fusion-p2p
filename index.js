@@ -6,11 +6,11 @@ const app = express();
 const port = 3000;
 
 // Initialize an array to store the orders
-let orderBook: any[] = [];
+let orderBook  = [];
 
 app.use(bodyParser.json());
 
-async function startWaku(): Promise<void> {
+async function startWaku() {
 	const waku = await Waku.create({
 		bootstrap: {
 			default: true,
@@ -54,6 +54,6 @@ async function startWaku(): Promise<void> {
 	});
 }
 
-startWaku().catch((e: Error) => {
+startWaku().catch((e) => {
 	console.error('Error starting Waku node:', e);
 });

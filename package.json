@@ -2,13 +2,16 @@
   "name": "waku-node-server",
   "version": "1.0.0",
   "description": "A simple Waku P2P server node in JavaScript.",
-  "main": "index.js",
+  "main": "index.ts",
+  "type": "module",
   "scripts": {
     "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/readable-stream": "^4.0.6",
+    "express": "^4.18.2",
     "js-waku": "^0.16.0"
   },
   "devDependencies": {
