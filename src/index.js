@@ -65,12 +65,13 @@ async function startWaku() {
   // Handle GET request to /orderbook
   app.get("/orderbook", async (req, res) => {
     try {
-      const { page, limit } = req.body;
-      console.log("Request body /orderbook: ", req.body);
+      const { page, limit } = req.query;
+      console.log("Request body /orderbook: ", req.query);
 
+      // const allActiveOrder = []
       const allActiveOrder = await syncOrderbookWithFusion(
-        page,
-        limit,
+        Number(page),
+        Number(limit),
         orderBook
       );
 
