@@ -7,40 +7,74 @@ export const createFusionOrder = (
   takingAmount,
   maker
 ) => {
-  // TODO maybe change auctionStartTime??
+  // const salt = new AuctionSalt({
+  //   duration: 180,
+  //   auctionStartTime: 1673548149,
+  //   initialRateBump: 50000,
+  //   bankFee: "0",
+  // });
+
+  // const suffix = new AuctionSuffix({
+  //   points: [
+  //     {
+  //       coefficient: 20000,
+  //       delay: 12,
+  //     },
+  //   ],
+  //   whitelist: [
+  //     {
+  //       address: maker,
+  //       allowance: 0,
+  //     },
+  //   ],
+  // });
+
+  // const order = new FusionOrder(
+  //   {
+  //     makerAsset,
+  //     takerAsset,
+  //     makingAmount,
+  //     takingAmount,
+  //     maker,
+  //   },
+  //   salt,
+  //   suffix
+  // );
+
+  // MOCK request
   const salt = new AuctionSalt({
     duration: 180,
     auctionStartTime: 1673548149,
     initialRateBump: 50000,
-    bankFee: "0",
-  });
+    bankFee: '0'
+})
 
-  const suffix = new AuctionSuffix({
+const suffix = new AuctionSuffix({
     points: [
-      {
-        coefficient: 20000,
-        delay: 12,
-      },
+        {
+            coefficient: 20000,
+            delay: 12
+        }
     ],
     whitelist: [
-      {
-        address: maker,
-        allowance: 0,
-      },
-    ],
-  });
+        {
+            address: '0xC18498b69A4585Df63Be55Cf418CCaaaf081333D',
+            allowance: 0
+        }
+    ]
+})
 
-  const order = new FusionOrder(
+const order = new FusionOrder(
     {
-      makerAsset,
-      takerAsset,
-      makingAmount,
-      takingAmount,
-      maker,
+        makerAsset: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+        takerAsset: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        makingAmount: '1000000000000000000',
+        takingAmount: '1420000000',
+        maker: '0xC18498b69A4585Df63Be55Cf418CCaaaf081333D'
     },
     salt,
     suffix
-  );
+)
 
   const fusionOrder = order.build();
   /* #=> {
@@ -57,5 +91,6 @@ export const createFusionOrder = (
             takingAmount: '1420000000'
         }
 */
-  return fusionOrder;
+
+  return {order:fusionOrder};
 };

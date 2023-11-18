@@ -7,7 +7,9 @@ const sdk = new FusionSDK({
 
 export const getFusionActiveOrders = async (page, limit) => {
   try {
-    await sdk.getActiveOrders({ page, limit });
+    const res = await sdk.getActiveOrders({ page, limit });
+
+    return res?.items
   } catch (e) {
     console.error("CANT GET ACTIVE ORDERS");
     console.error(e);
@@ -20,7 +22,7 @@ export const syncOrderbookWithFusion = async (page, limit, orderbook) => {
 
   // get orders from fusion that we don't have
   const missingFusionOrders = ordersFromFusion.filter(
-    (fusionOrder) => !orderbook.some((order) => fusionOrder.salt === order.salt)
+    (fusionOrder) => !orderbook.some((order) => fusionOrder.order.salt === order.salt)
   );
 
   return orderbook.concat(missingFusionOrders);
