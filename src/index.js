@@ -1,6 +1,7 @@
 import express from 'express';
 import { Waku, WakuMessage } from 'js-waku';
 import bodyParser from 'body-parser';
+import { createFusionOrder} from './create-order';
 
 const app = express();
 const port = 3000;
@@ -35,7 +36,8 @@ async function startWaku() {
 
 	// Handle POST request to /create-order
 	app.post('/create-order', async (req, res) => {
-		const order = req.body;
+		// const order = req.body;
+		const order = await createFusionOrder()
 		console.log('Received order:', order);
 
 		const payload = new TextEncoder().encode(JSON.stringify(order));
