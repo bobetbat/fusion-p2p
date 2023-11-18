@@ -55,7 +55,7 @@ async function startWaku() {
       // Push new order to orderBook
       orderBook.push(order);
 
-      res.send("Order added to the orderbook");
+      res.send(`Order added to the orderbook: maker: ${order.order.maker}, salt: ${order.order.salt}`);
     } catch (e) {
       console.error(e);
       console.error("ERROR MESSAGE:  ", e.messageText);
@@ -68,7 +68,6 @@ async function startWaku() {
       const { page, limit } = req.query;
       console.log("Request body /orderbook: ", req.query);
 
-      // const allActiveOrder = []
       const allActiveOrder = await syncOrderbookWithFusion(
         Number(page),
         Number(limit),
