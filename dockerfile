@@ -1,20 +1,23 @@
-# Use an official Node runtime as a parent image
-FROM node:16
+FROM node:16-alpine
 
-# Set the working directory in the container
+# Install OpenSSL
+RUN apk add --update libc6-compat openssl openssl-dev openssl1.1-compat
+
+# Add working directory in the docker container
 WORKDIR /usr/src/app
 
-# Copy the package.json and package-lock.json files
-COPY package*.json ./
+# Add package file
+COPY package.json ./
+COPY yarn.lock ./
 
-# Install any needed packages
-RUN npm install
+# Install deps
+RUN yarn
 
-# Bundle your app's source code inside the Docker image
+# Copy source
 COPY . .
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Build dist
+RUN yarn build
 
-# Define the command to run your app
-CMD [ "node", "s.js" ]
+# Run dist
+CMD yarn start

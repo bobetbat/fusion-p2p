@@ -1,1 +1,11 @@
-/node_modules
+# NodeJS
+node_modules/
+yarn-error.log*
+
+# Build
+dist/
+
+# Env
+.env
+
+.syncs/
