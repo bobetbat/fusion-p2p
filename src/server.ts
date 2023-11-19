@@ -9,7 +9,6 @@ import rateLimit from 'express-rate-limit'
 import ApiV1Router from './routes'
 import getConfig from './config'
 import logger from './utils/logger'
-import initScheduledJobs from './cron'
 
 require("dotenv").config();
 
@@ -55,7 +54,6 @@ app.use('/v1.0', limiter)
 export const start = (): Promise<http.Server> => {
   logger.info(`Starting Express server [${getConfig().APP_ENV}]`)
   return new Promise((resolve) => {
-    initScheduledJobs()
     server.listen(getConfig().PORT, () => {
       logger.info('Express server listening on port ' + getConfig().PORT)
       resolve(server)
@@ -76,3 +74,6 @@ export const shutdown = (): Promise<void> => {
     resolve()
   })
 }
+
+
+
